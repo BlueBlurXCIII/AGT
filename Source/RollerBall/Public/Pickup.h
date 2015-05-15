@@ -19,11 +19,11 @@ class ROLLERBALL_API APickup : public AActor
 
 	/** Simple collision primitive to use as the root component*/
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = pickup)
-		TSubobjectPtr<USphereComponent> BaseCollisionComponent;
+	TSubobjectPtr<USphereComponent> BaseCollisionComponent;
 
 	/** StaticMeshComponent to represent the pickup in the level*/
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = pickup)
-		TSubobjectPtr<UStaticMeshComponent> PickupMesh;
+	TSubobjectPtr<UStaticMeshComponent> PickupMesh;
 
 	/** Function to call when pickup is collected*/
 	UFUNCTION(BlueprintNativeEvent)

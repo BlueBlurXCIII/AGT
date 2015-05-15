@@ -1,6 +1,8 @@
 // Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Pawn.h"
+#include "Pickup.h"
+#include "pickupMain.h"
 #include "RollerBallBall.generated.h"
 
 UCLASS(config=Game)
@@ -38,13 +40,6 @@ class ARollerBallBall : public APawn
 
 protected:
 
-	
-	//UFUNCTION(BlueprintCallable, Category = Speed)
-	//void CollectSpeed(float Val);
-
-	UFUNCTION(BlueprintImplementableEvent, Category = Speed)
-	void SpeedUp(float Speedup);
-
 	/** Called for side to side input */
 	void MoveRight(float Val);
 
@@ -54,8 +49,8 @@ protected:
 	/** Handle jump action. */
 	void Jump();
 
-	/** Override the OnPickedUp function (use implem beacause is a a native event*/
-	//void OnPickedUp_Implementation();
+	//** Override the OnPickedUp function (use implem beacause is a a native event*/
+	void Collect();
 
 	// AActor interface
 	virtual void ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;

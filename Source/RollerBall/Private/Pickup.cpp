@@ -25,6 +25,7 @@ APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	//Attach the StaticMeshComponent to root component
 	PickupMesh->AttachTo(RootComponent);
 
+
 }
 
 void APickup::OnPickedUp_Implementation()

@@ -2,7 +2,6 @@
 
 #include "RollerBall.h"
 #include "RollerBallBall.h"
-//#include "SpeedPickup.h"
 
 ARollerBallBall::ARollerBallBall(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
@@ -55,6 +54,7 @@ void ARollerBallBall::SetupPlayerInputComponent(class UInputComponent* InputComp
 	InputComponent->BindAxis("MoveForward", this, &ARollerBallBall::MoveForward);
 
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ARollerBallBall::Jump);
+	InputComponent->BindAction("Collect", IE_Pressed, this, &ARollerBallBall::Collect);
 }
 
 void ARollerBallBall::MoveRight(float Val)
@@ -87,29 +87,32 @@ void ARollerBallBall::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor
 }
 
 
-/*void ARollerBallBall::OnPickedUp_Implementation()
+void ARollerBallBall::Collect()
 {
-	//float Val;
-	//Get all overlapping Actors and store them in a CollectedActors  array
-	TArray<AActor*> CollectedActors;
-	CollectionSphere->GetOverlappingActors(CollectedActors);
-	Super::OnActorBeginOverlap;
-	//For each actor collected
-	for (int32 iCollected = 0; iCollected < CollectedActors.Num(); ++iCollected)
-	{
-		//cast the collected actor to ASpeedPickup
-		ASpeedPickup* const sP = Cast<ASpeedPickup>(CollectedActors[iCollected]);
+	//get all overlapping Actors and store them in a collectedActor array
+	TArray<AActor*> collectedActor;
+	CollectionSphere->GetOverlappingActors(collectedActor);
 
-		//if the cast is successful, and pickup is valid and active
-		if (sP && !sP->IsPendingKill() && sP->bIsActive)
-		{
-			//const FVector Torque = FVector(0.f, Val * RollTorque, 0.f);
-			//Ball->AddTorque(Torque + 1000000);
-			//Call the battery's OnPickedUp function
-			sP->OnPickedUp();
-			//Deactivate the battery
-			sP->bIsActive = false;
-			//ASpeedPickup* destroy();
-		}
+	//for each actor collected
+	for (int32 iCollected = 0; iCollected < collectedActor.Num(); ++iCollected)
+	{
+		//Cast the collected to APickUp
+		APickup* const Pickup = Cast<APickup>(collectedActor[iCollected]);
+
+		
+			//if cast is successful, and pickup is valid and active
+			if (Pickup && !Pickup->IsPendingKill() && Pickup->bIsActive)
+			{
+				//call the "Pickup" pick up function
+				Pickup->OnPickedUp();
+				//set isActive to false
+				Pickup->bIsActive = false;
+			}
+
+		if (Ball->IsOverlappingActor(Pickup))
+			{
+				Collect();
+			}
+
 	}
-}*/
+}
